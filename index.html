@@ -15,210 +15,243 @@
             min-height: 100vh;
             background-color: #1a1a1a;
             color: #f0f0f0;
-            /* Zmiana czcionki na nową */
             font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
             text-align: center;
+            overflow-x: hidden;
         }
 
-        #question-section, #scratch-section {
+        .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: fadeIn 0.8s ease-in;
         }
 
         h1 {
-            font-size: 3rem;
-            margin: 20px 0;
+            font-size: 2.2rem;
             color: #FF69B4;
             text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            padding: 0 15px;
-            font-weight: 700;
+            margin-bottom: 30px;
         }
 
-        .choices {
-            display: flex;
-            gap: 100px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .choice-btn {
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 50px; /* Bardziej obły kształt przycisku */
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            min-width: 140px;
-            transition: all 0.3s;
-        }
-
-        #yes-btn { background-color: #4CAF50; color: white; }
-        #yes-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px #4CAF50; }
-        
-        #no-btn { background-color: #F44336; color: white; z-index: 1000; }
-
-        #final-gif {
-            display: none;
-            width: 250px;
-            max-width: 80vw;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 25px #FF69B4;
-            animation: fadeIn 1s;
-        }
-
-        .scratch-container {
-            display: flex;
-            flex-direction: row;
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            padding: 20px;
-            justify-content: center;
-            flex-wrap: wrap; /* Pozwala na zawijanie na małych ekranach */
-        }
-
-        .scratch-card {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            background-color: #ffffff;
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 3px solid #FF69B4;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transition: all 0.5s ease;
-        }
-
-        .cover {
-            position: absolute;
-            top: 0;
-            left: 0;
+            max-width: 500px;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #d4d4d4 0%, #8e8e8e 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            color: #444;
-            z-index: 2;
-            font-weight: 700;
         }
 
-        .content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            box-sizing: border-box;
-            color: #d63384;
-            font-weight: 700;
+        .tile-btn {
+            background-color: #333;
+            color: white;
+            border: 2px solid #555;
+            padding: 15px;
             font-size: 1rem;
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
-        .scratched .cover {
-            transform: translateY(-110%);
-            opacity: 0;
+        .tile-btn img {
+            height: 65px;
+            width: 65px;
+            object-fit: contain;
         }
 
+        .tile-btn:hover:not(:disabled) {
+            border-color: #FF69B4;
+            background-color: #444;
+            transform: translateY(-5px);
+        }
+
+        .tile-btn:disabled {
+            opacity: 0.3;
+            filter: grayscale(1);
+        }
+
+        #timer-display {
+            margin-top: 25px;
+            font-size: 1.2rem;
+            color: #F44336;
+            font-weight: 700;
+            display: none;
+            background: rgba(244, 67, 54, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .choices { 
+            display: flex; 
+            gap: 50px; 
+            justify-content: center; 
+            align-items: center; 
+            margin-top: 40px; 
+            min-height: 300px; /* Więcej miejsca na rosnący przycisk */
+        }
+
+        .btn-action { 
+            padding: 15px 40px; 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #yes-btn { 
+            background-color: #4CAF50; 
+            color: white; 
+            z-index: 100;
+        }
+
+        #no-btn { 
+            background-color: #F44336; 
+            color: white; 
+        }
+
+        .scratch-container { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .scratch-card { position: relative; width: 150px; height: 150px; background: #fff; border-radius: 15px; border: 3px solid #FF69B4; overflow: hidden; cursor: pointer; }
+        .cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #d4d4d4, #8e8e8e); z-index: 2; display: flex; justify-content: center; align-items: center; font-size: 40px; color: #444; font-weight: bold; }
+        .content { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; color: #d63384; font-weight: 700; padding: 10px; box-sizing: border-box; }
+        .scratched .cover { transform: translateY(-110%); opacity: 0; transition: 0.6s; }
         .not-chosen { opacity: 0.3; filter: grayscale(1); }
-        .chosen { transform: scale(1.1); border-color: #4CAF50; z-index: 10; }
+        .chosen { transform: scale(1.1); border-color: #4CAF50; z-index: 10; box-shadow: 0 0 20px #4CAF50; }
+        #final-gif { display: none; width: 220px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 0 20px #FF69B4; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Optymalizacja pod telefony */
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .choices { gap: 30px; flex-direction: column; width: 100%; align-items: center; }
-            .choice-btn { width: 80%; font-size: 1.2rem; }
-            .scratch-card { width: 140px; height: 140px; }
-            .content { font-size: 0.9rem; }
+        @media (max-width: 500px) {
+            h1 { font-size: 1.6rem; }
+            .tile-btn img { height: 50px; width: 50px; }
+            .scratch-card { width: 135px; height: 135px; }
+            .choices { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="question-section">
-        <h1>Czy zostaniesz moją walentynką?</h1>
+    <div id="quiz-section" class="container">
+        <h1>Jaki jest najlepszy klub na świecie? ⚽</h1>
+        <div class="quiz-grid">
+            <button class="tile-btn" onclick="checkAnswer('Real')">
+                <img src="https://static.wikia.nocookie.net/logopedia/images/2/29/Real_Madrid_CF_logo.png" alt="Real">
+                Real Madryt
+            </button>
+            <button class="tile-btn" onclick="checkAnswer('City')">
+                <img src="https://static.wikia.nocookie.net/logopedia/images/e/eb/Manchester_City_FC_badge.png" alt="City">
+                Manchester City
+            </button>
+            <button class="tile-btn" onclick="checkAnswer('Barca')">
+                <img src="https://static.wikia.nocookie.net/logopedia/images/4/47/FC_Barcelona.png" alt="Barca">
+                FC Barcelona
+            </button>
+            <button class="tile-btn" onclick="checkAnswer('United')">
+                <img src="https://static.wikia.nocookie.net/logopedia/images/1/1a/Manchester_United_FC_crest.png" alt="United">
+                Manchester United
+            </button>
+        </div>
+        <div id="timer-display">Kara za złą odpowiedź! ❌<br>Spróbuj ponownie za: <span id="time">5:00</span></div>
+    </div>
+
+    <div id="question-section" class="container" style="display: none;">
+        <h1>Grzeczna <br>A teraz... czy zostaniesz moją walentynką?</h1>
         <div class="choices">
-            <button id="yes-btn" class="choice-btn">Tak!</button>
-            <button id="no-btn" class="choice-btn">Nie</button>
+            <button id="yes-btn" class="btn-action">Tak!</button>
+            <button id="no-btn" class="btn-action">Nie</button>
         </div>
     </div>
 
-    <div id="scratch-section" style="display: none;">
-        <img id="final-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm01YzFpNWE4eXUwbDlmb21iYXY4YTc1Z3Nvd2E1ejM3cXBzd291NyZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/MDJ9IbxxvDUQM/giphy.gif" alt="Happy Cat">
+    <div id="scratch-section" class="container" style="display: none;">
+        <img id="final-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm01YzFpNWE4eXUwbDlmb21iYXY4YTc1Z3Nvd2E1ejM3cXBzd291NyZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/MDJ9IbxxvDUQM/giphy.gif">
         <h1 id="main-title">Wybierz jedną zdrapkę! ❤️</h1>
-        
         <div class="scratch-container">
-            <div class="scratch-card" onclick="scratch(this)">
-                <div class="cover">1</div>
-                <div class="content">Wyjście do kina 🎬</div>
-            </div>
-            <div class="scratch-card" onclick="scratch(this)">
-                <div class="cover">2</div>
-                <div class="content">Wieczór filmowy + kolacja 🍕</div>
-            </div>
-            <div class="scratch-card" onclick="scratch(this)">
-                <div class="cover">3</div>
-                <div class="content">Relaksujący masaż 💆‍♀️</div>
-            </div>
-            <div class="scratch-card" onclick="scratch(this)">
-                <div class="cover">4</div>
-                <div class="content">Cały dzień na TAK! ✅</div>
-            </div>
+            <div class="scratch-card" onclick="scratch(this)"><div class="cover">1</div><div class="content">Wyjście do kina 🎬</div></div>
+            <div class="scratch-card" onclick="scratch(this)"><div class="cover">2</div><div class="content">Wieczór filmowy + kolacja 🍕</div></div>
+            <div class="scratch-card" onclick="scratch(this)"><div class="cover">3</div><div class="content">Relaksujący masaż 💆‍♀️</div></div>
+            <div class="scratch-card" onclick="scratch(this)"><div class="cover">4</div><div class="content">Cały dzień na TAK! ✅</div></div>
         </div>
     </div>
 
     <script>
-        const yesBtn = document.getElementById('yes-btn');
-        const noBtn = document.getElementById('no-btn');
-        const questionSection = document.getElementById('question-section');
-        const scratchSection = document.getElementById('scratch-section');
-        const mainTitle = document.getElementById('main-title');
-        const finalGif = document.getElementById('final-gif');
+        let isLocked = false;
+        let yesScale = 1;
 
-        yesBtn.addEventListener('click', () => {
-            questionSection.style.display = 'none';
-            scratchSection.style.display = 'flex';
-        });
+        function checkAnswer(club) {
+            if (isLocked) return;
+            if (club === 'United') {
+                document.getElementById('quiz-section').style.display = 'none';
+                document.getElementById('question-section').style.display = 'flex';
+            } else {
+                startTimer(300);
+            }
+        }
+
+        function startTimer(duration) {
+            isLocked = true;
+            const buttons = document.querySelectorAll('.tile-btn');
+            buttons.forEach(btn => btn.disabled = true);
+            document.getElementById('timer-display').style.display = 'block';
+            let timer = duration;
+            const interval = setInterval(() => {
+                let m = Math.floor(timer / 60);
+                let s = timer % 60;
+                document.getElementById('time').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    isLocked = false;
+                    buttons.forEach(btn => btn.disabled = false);
+                    document.getElementById('timer-display').style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        document.getElementById('yes-btn').onclick = () => {
+            document.getElementById('question-section').style.display = 'none';
+            document.getElementById('scratch-section').style.display = 'flex';
+        };
 
         function scratch(card) {
-            mainTitle.innerText = "Kocham Cię Aniulka!";
-            finalGif.style.display = "block";
-
-            const allCards = document.querySelectorAll('.scratch-card');
-            allCards.forEach(c => {
+            document.getElementById('main-title').innerText = "Kocham Cię Aniulka!";
+            document.getElementById('final-gif').style.display = "block";
+            const all = document.querySelectorAll('.scratch-card');
+            all.forEach(c => {
                 c.classList.add('scratched');
                 c.style.pointerEvents = "none";
-                if (c === card) {
-                    c.classList.add('chosen');
-                } else {
-                    c.classList.add('not-chosen');
-                }
+                c.classList.add(c === card ? 'chosen' : 'not-chosen');
             });
         }
 
-        const escape = () => {
-            const padding = 50;
-            const newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2) + padding;
-            const newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2) + padding;
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+
+        const escapeAndGrow = () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             noBtn.style.position = 'fixed';
-            noBtn.style.left = `${newX}px`;
-            noBtn.style.top = `${newY}px`;
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            // Teraz rośnie o 15% przy każdym ruchu
+            yesScale += 0.15;
+            yesBtn.style.transform = `scale(${yesScale})`;
         };
 
-        noBtn.addEventListener('mouseenter', escape);
-        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); escape(); });
+        noBtn.addEventListener('mouseenter', escapeAndGrow);
+        noBtn.addEventListener('touchstart', (e) => { 
+            e.preventDefault(); 
+            escapeAndGrow(); 
+        });
     </script>
 </body>
 </html>
