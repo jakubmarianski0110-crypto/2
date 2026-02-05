@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dla Aniuli ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -14,7 +15,8 @@
             min-height: 100vh;
             background-color: #1a1a1a;
             color: #f0f0f0;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            /* Zmiana czcionki na nową */
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
             text-align: center;
         }
@@ -27,56 +29,61 @@
         }
 
         h1 {
-            font-size: 3.5vw;
+            font-size: 3rem;
             margin: 20px 0;
             color: #FF69B4;
             text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            padding: 0 15px;
+            font-weight: 700;
         }
 
         .choices {
             display: flex;
-            gap: 150px;
+            gap: 100px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .choice-btn {
-            padding: 20px 40px;
-            font-size: 1.8vw;
-            font-weight: bold;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: 700;
             border: none;
-            border-radius: 15px;
+            border-radius: 50px; /* Bardziej obły kształt przycisku */
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.4);
             min-width: 140px;
+            transition: all 0.3s;
         }
 
-        #yes-btn { background-color: #4CAF50; color: white; transition: transform 0.2s; }
-        #yes-btn:hover { transform: scale(1.1); }
+        #yes-btn { background-color: #4CAF50; color: white; }
+        #yes-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px #4CAF50; }
+        
         #no-btn { background-color: #F44336; color: white; z-index: 1000; }
 
-        /* Sekcja po wyborze */
         #final-gif {
             display: none;
             width: 250px;
+            max-width: 80vw;
             border-radius: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 0 20px #FF69B4;
+            box-shadow: 0 0 25px #FF69B4;
             animation: fadeIn 1s;
         }
 
         .scratch-container {
             display: flex;
             flex-direction: row;
-            gap: 20px;
+            gap: 15px;
             padding: 20px;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Pozwala na zawijanie na małych ekranach */
         }
 
         .scratch-card {
             position: relative;
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             background-color: #ffffff;
             border-radius: 15px;
             overflow: hidden;
@@ -96,10 +103,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 50px;
+            font-size: 40px;
             color: #444;
             z-index: 2;
-            transition: transform 0.8s ease, opacity 0.5s;
+            font-weight: 700;
         }
 
         .content {
@@ -108,42 +115,33 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 10px;
             box-sizing: border-box;
             color: #d63384;
-            font-weight: bold;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1rem;
         }
 
-        /* Odkrycie zdrapki */
         .scratched .cover {
             transform: translateY(-110%);
             opacity: 0;
         }
 
-        .not-chosen {
-            opacity: 0.4;
-            filter: grayscale(0.8);
-            transform: scale(0.9);
-        }
-
-        .chosen {
-            transform: scale(1.1);
-            border-color: #00FF00;
-            box-shadow: 0 0 25px #00FF00;
-            z-index: 10;
-        }
+        .not-chosen { opacity: 0.3; filter: grayscale(1); }
+        .chosen { transform: scale(1.1); border-color: #4CAF50; z-index: 10; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Optymalizacja pod telefony */
         @media (max-width: 768px) {
-            h1 { font-size: 8vw; }
-            .choices { gap: 50px; flex-direction: column; }
+            h1 { font-size: 1.8rem; }
+            .choices { gap: 30px; flex-direction: column; width: 100%; align-items: center; }
+            .choice-btn { width: 80%; font-size: 1.2rem; }
             .scratch-card { width: 140px; height: 140px; }
-            #final-gif { width: 180px; }
+            .content { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -153,7 +151,7 @@
         <h1>Czy zostaniesz moją walentynką?</h1>
         <div class="choices">
             <button id="yes-btn" class="choice-btn">Tak!</button>
-            <button id="no-btn" class="choice-btn">nie</button>
+            <button id="no-btn" class="choice-btn">Nie</button>
         </div>
     </div>
 
@@ -164,7 +162,7 @@
         <div class="scratch-container">
             <div class="scratch-card" onclick="scratch(this)">
                 <div class="cover">1</div>
-                <div class="content">Wyjście do kina🎬</div>
+                <div class="content">Wyjście do kina 🎬</div>
             </div>
             <div class="scratch-card" onclick="scratch(this)">
                 <div class="cover">2</div>
@@ -172,7 +170,7 @@
             </div>
             <div class="scratch-card" onclick="scratch(this)">
                 <div class="cover">3</div>
-                <div class="content">Masaż 💆‍♀️</div>
+                <div class="content">Relaksujący masaż 💆‍♀️</div>
             </div>
             <div class="scratch-card" onclick="scratch(this)">
                 <div class="cover">4</div>
@@ -195,20 +193,17 @@
         });
 
         function scratch(card) {
-            // 1. Zmień napisy i pokaż GIFa
-            mainTitle.innerText = "Kocham Cie Aniulka!";
+            mainTitle.innerText = "Kocham Cię Aniulka!";
             finalGif.style.display = "block";
 
-            // 2. Odkryj wszystkie zdrapki
             const allCards = document.querySelectorAll('.scratch-card');
             allCards.forEach(c => {
-                c.classList.add('scratched'); // Odkrywa warstwę srebrną
-                c.style.pointerEvents = "none"; // Blokuje dalsze klikanie
-                
+                c.classList.add('scratched');
+                c.style.pointerEvents = "none";
                 if (c === card) {
-                    c.classList.add('chosen'); // Wyróżnia wybraną
+                    c.classList.add('chosen');
                 } else {
-                    c.classList.add('not-chosen'); // Poszarza pozostałe
+                    c.classList.add('not-chosen');
                 }
             });
         }
